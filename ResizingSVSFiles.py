@@ -5,7 +5,7 @@ from openslide import OpenSlide
 from PIL import Image
 from multiprocessing import Pool, cpu_count
 
-def resize_svs_to_multiple_images(svs_file_path, output_folder, output_format='JPEG', scale_factors=[1.0, 0.5, 0.25, 0.125]):
+def resize_svs_to_multiple_images(svs_file_path, output_folder, output_format='JPEG', scale_factors=[1.0]):
     slide = OpenSlide(svs_file_path)
 
     for scale_factor in scale_factors:
@@ -24,7 +24,7 @@ def process_svs_file(args):
     input_svs_file, output_folder, output_image_format, scale_factors = args
     resize_svs_to_multiple_images(input_svs_file, output_folder, output_image_format, scale_factors)
 
-def process_multiple_svs_files(input_folder, output_folder, output_image_format='JPEG', scale_factors=[1.0, 0.5, 0.25, 0.125], num_processes=None):
+def process_multiple_svs_files(input_folder, output_folder, output_image_format='JPEG', scale_factors=[1.0], num_processes=None):
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
 
@@ -42,10 +42,10 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Process multiple SVS files and save resized images')
     parser.add_argument('-i', '--input', type=str, required=True, help='Input folder containing SVS files')
     parser.add_argument('-o', '--output', type=str, required=True, help='Output folder for resized images')
-    parser.add_argument('--scale_factors', nargs='+', type=float, default=[1.0, 0.5, 0.25, 0.125], help='Space-separated list of scale factors (default: 40x, 20x, 10x, 5x)')
+    parser.add_argument('--scale_factor', type=float, default=1.0, help='Scale factor to use (default: 1.0 for 40x, 0.5(20x), 0.25(10x))')
     parser.add_argument('--num_processes', type=int, default=None, help='Number of processes to use (default: all available CPU cores)')
     parser.add_argument('--format', type=str, choices=['JPEG', 'PNG'], default='JPEG', help='Output image format (default: JPEG)')
 
     args = parser.parse_args()
 
-    process_multiple_svs_files(args.input, args.output, args.format, args.scale_factors, args.num_processes)
+    process_multiple_svs_files(args.input, args.output, args.format, [args.scale_factor], args.num_processes)
