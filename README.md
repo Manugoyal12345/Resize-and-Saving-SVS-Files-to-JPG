@@ -1,4 +1,4 @@
-# Resizing-and-Saving-SVS-Files-to-JPG
+# Resizing and Saving SVS Files to JPG/PNG
 Resizing and convert .svs files (commonly used for high-resolution medical images) to .jpg or .png format
 
 Make sure to install the OpenSlide and Pillow libraries in your Python environment:
