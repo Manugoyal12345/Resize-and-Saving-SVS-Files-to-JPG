@@ -1,5 +1,5 @@
 # Resizing-and-Saving-SVS-Files-to-JPG
-Resize and convert .svs files (commonly used for high-resolution medical images) to .jpg or .png format
+Resizing and convert .svs files (commonly used for high-resolution medical images) to .jpg or .png format
 
 In this example, the process_multiple_svs_files function has a new num_processes parameter, which defaults to None. If the num_processes parameter is not specified, the function uses all available CPU cores. If you want to set a fixed number of processes, pass it as an argument when calling the process_multiple_svs_files function. In this example, num_processes is set to half of the available CPU cores with cpu_count() // 2.
 
